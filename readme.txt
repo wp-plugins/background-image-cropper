@@ -1,16 +1,16 @@
 === Background Image Cropper ===
 Contributors: celloexpressions, wordpressdotorg
 Tags: custom background, background image, cropping, customizer
-Requires at least: 4.3
+Requires at least: 4.3-beta3
 Tested up to: 4.3
-Stable tag: 0.9
+Stable tag: 1.0
 Description: Adds cropping to backgroud images in the Customizer, like header images have.
 License: GPLv2
 
 == Description ==
-This plugin is a WordPress core feature-plugin that adds cropping to background images for parity with header images. For this particular feature the implementation is quite simple, but it's starting out as a plugin to gauge user interest in this feature and whether the feature imrpoves the user experience of background images.
+This plugin is a WordPress core feature-plugin that adds cropping to background images for parity with header images. For this particular feature the implementation is quite simple, but it's starting out as a plugin to gauge user interest in this feature and whether the feature improves the user experience of background images.
 
-This plugin currently reuires a core patch to function completely, but will work when WordPress 4.3 is finished.
+This plugin requires WordPress 4.3 Beta 3 or later.
 
 If you're interested in contributing to this project, ping @celloexpressions on <a href="http://chat.wordpress.org/">WordPress core Slack</a>. Please comment on the trac ticket with ideas and feedback: https://core.trac.wordpress.org/ticket/32403.
 
@@ -24,10 +24,16 @@ If you're interested in contributing to this project, ping @celloexpressions on 
 1. New cropping step when adding a background image.
 
 == Changelog ==
+= 1.0 =
+* Fix setting handling.
+
 = 0.9 =
 * Initial commit.
 * Full functionality pending the completion of https://core.trac.wordpress.org/ticket/29211
 
 == Upgrade Notice ==
+= 1.0 =
+* Fix setting handling.
+
 = 0.9 =
 * Initial commit.

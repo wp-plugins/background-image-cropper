@@ -3,7 +3,7 @@
  * Plugin Name: Background Image Cropper
  * Plugin URI: https://core.trac.wordpress.org/ticket/32403
  * Description: Adds cropping to backgroud images in the Customizer, like header images have.
- * Version: 0.9
+ * Version: 1.0
  * Author: Nick Halsey
  * Author URI: http://nick.halsey.co/
  * Tags: custom background, background image, cropping, customizer
@@ -35,12 +35,42 @@ add_action( 'customize_register', 'background_image_cropper_register', 11 ); // 
  * @todo ensure that the background-image context is properly set for any cropped background images.
  *
  * @param WP_Customize_Manager $wp_customize Customizer manager object.
- * @since 4.2.0
  */
 function background_image_cropper_register( $wp_customize ) {
+	class WP_Customize_Cropped_Background_Image_Control extends WP_Customize_Cropped_Image_Control {
+		public $type = 'background';
+
+		function enqueue() {
+			wp_enqueue_script( 'background-image-cropper', plugin_dir_url( __FILE__ ) . 'background-image-cropper.js', array( 'jquery', 'customize-controls' ) );
+		}
+
+		/**
+		 * Refresh the parameters passed to the JavaScript via JSON.
+		 *
+		 * @since 3.4.0
+		 *
+		 * @uses WP_Customize_Media_Control::to_json()
+		 */
+		public function to_json() {
+			parent::to_json();
+
+			$value = $this->value();
+			if ( $value ) {
+				// Get the attachment model for the existing file.
+				$attachment_id = attachment_url_to_postid( $value );
+				if ( $attachment_id ) {
+					$this->json['attachment'] = wp_prepare_attachment_for_js( $attachment_id );
+				}
+			}
+		}
+	}
+
+	$wp_customize->register_control_type( 'WP_Customize_Cropped_Background_Image_Control' );
+
 	$wp_customize->remove_control( 'background_image' );
-	$wp_customize->add_control( new WP_Customize_Cropped_Image_Control( $wp_customize, 'background_image', array(
+	$wp_customize->add_control( new WP_Customize_Cropped_Background_Image_Control( $wp_customize, 'background_image', array(
 		'section'     => 'background_image',
+		'label'       => __( 'Background Image' ),
 		'priority'    => 0,
 		'flex_width'  => true,
 		'flex_height' => true,
